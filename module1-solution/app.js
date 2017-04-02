@@ -1,36 +1,36 @@
 (function () {
   'use strict';
 
-
   angular.module('LunchCheckerApp',[])
 
-  .controller('LunchCheckerController',LunchCheckerController) ;
+  .controller('LunchCheckerController',function ($scope){
+       $scope.lunchItems="";
+       $scope.message ="";
 
+       $scope.checker = function functionName() {
+            var message =checkValue($scope.lunchItems);
+            $scope.message =message;
+       };
 
-LunchCheckerController.$inject = ['$scope'];
-function LunchCheckerController = function ($scope) {
-    $scope.lunchItems = "";
-    $scope.message = "";
-    $scope.checker = function () {
-      var lunchItems= $scope.lunchItems;
-      if (lunchItems=="") {
-        $scope.message ="Please enter data first"
-      }
-          var arrayOfLunchItems = lunchItems.split(',');
+       function checkValue(string) {
+            var message ="";
 
+            if(string==""){
+                message = "Please enter data first";
+                return message;
+            }
 
+            var items = string.split(',');
+            var length = items.length;
+            console.log(length);
+            if (length<=3) {
+               message = "Enjoy!";
+            }
+            else if (length>3) {
+              message = "Too much!"
+            }
 
-          if(0<arrayOfLunchItems.length<=3){
-                $scope.message = "Enjoy!" }
-          else if (arrayOfLunchItems.length>3) {
-                $scope.message = "Too much!"
-          }
-          else if (arrayOfLunchItems.length==0) {
-                $scope.message = "Too much!"
-          }
-
-
-    };
-  }
-
+            return message;
+       }
+}) ;
 })();
